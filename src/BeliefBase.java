@@ -1,10 +1,32 @@
 import java.util.ArrayList;
 
 public class BeliefBase {
+
+    private ArrayList<SentenceInterface> beliefBase2 = new ArrayList<>();
+
+
+    public void printSentences () {
+        for (SentenceInterface si: beliefBase2) {
+            System.out.println(si.toString());
+        }
+    }
+
+    public void addSentence (SentenceInterface sentence) {
+
+        beliefBase2.add(sentence);
+    }
+
+
+
+
+
+
+
+
+
+    /*
     private ArrayList<Sentence> beliefBase = new ArrayList<>();
-
-
-    public void printFormulas () {
+    public void printSentence () {
 
         System.out.println("printing belief base: ");
 
@@ -15,13 +37,13 @@ public class BeliefBase {
     }
 
     public void addSentence (Sentence sentence) {
-        if (!formulaDoesExist(sentence)) {
+        if (!sentenceDoesExist(sentence)) {
 
             beliefBase.add(sentence);
         }
     }
 
-    public boolean formulaDoesExist (Sentence sentence) {
+    public boolean sentenceDoesExist (Sentence sentence) {
 
         for (Sentence i: beliefBase) {
             if (i.getSentence().equals(sentence.getSentence())) {
@@ -33,6 +55,11 @@ public class BeliefBase {
         System.out.println("sentence ("+ sentence.getSentence() + ") does not already exist");
         return false;
     }
+
+
+
+
+
     public ArrayList<Sentence> getBeliefBase() {
         return beliefBase;
     }
@@ -40,4 +67,5 @@ public class BeliefBase {
     public void setBeliefBase(ArrayList<Sentence> beliefBase) {
         this.beliefBase = beliefBase;
     }
+    */
 }
