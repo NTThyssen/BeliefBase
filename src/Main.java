@@ -13,8 +13,6 @@ public class Main {
         );
         System.out.println("Hello Ai!");
 
-
-
         BB.printFormulas();
 
         BB.addSentence(new Sentence("hey"));

@@ -1,4 +1,3 @@
-
 public class Sentence {
     private String sentence;
 
