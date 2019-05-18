@@ -19,4 +19,25 @@ public class Expression implements SentenceInterface {
         }
         return "!(" + sentence1.toString() + " " + connective.toString() + " " + sentence2.toString() + ")";
     }
+
+
+    public void addVariable() {
+
+    }
+
+    public SentenceInterface getSentence1() {
+        return sentence1;
+    }
+
+    public void setSentence1(SentenceInterface sentence1) {
+        this.sentence1 = sentence1;
+    }
+
+    public SentenceInterface getSentence2() {
+        return sentence2;
+    }
+
+    public void setSentence2(SentenceInterface sentence2) {
+        this.sentence2 = sentence2;
+    }
 }

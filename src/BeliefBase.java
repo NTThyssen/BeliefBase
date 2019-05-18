@@ -1,71 +1,130 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BeliefBase {
 
-    private ArrayList<SentenceInterface> beliefBase2 = new ArrayList<>();
+    private ArrayList<SentenceInterface> beliefBase = new ArrayList<>();
+    private ArrayList<Variable> variables = new ArrayList<>();
+    private ArrayList<ArrayList<Boolean>> variableValues = new ArrayList<ArrayList<Boolean>>();
+    private ArrayList<ArrayList<Boolean>> sentenceValues = new ArrayList<ArrayList<Boolean>>();
+    private ArrayList<String> truthTableHeader = new ArrayList<>();
 
 
     public void printSentences () {
-        for (SentenceInterface si: beliefBase2) {
+        for (SentenceInterface si: beliefBase) {
             System.out.println(si.toString());
         }
     }
 
     public void addSentence (SentenceInterface sentence) {
+        beliefBase.add(sentence);
 
-        beliefBase2.add(sentence);
     }
 
 
+    public void printTruthTable() {
 
-
-
-
-
-
-
-    /*
-    private ArrayList<Sentence> beliefBase = new ArrayList<>();
-    public void printSentence () {
-
-        System.out.println("printing belief base: ");
-
-        for (Sentence i: beliefBase) {
-
-            System.out.println(i.getSentence());
-        }
-    }
-
-    public void addSentence (Sentence sentence) {
-        if (!sentenceDoesExist(sentence)) {
-
-            beliefBase.add(sentence);
-        }
-    }
-
-    public boolean sentenceDoesExist (Sentence sentence) {
-
-        for (Sentence i: beliefBase) {
-            if (i.getSentence().equals(sentence.getSentence())) {
-                System.out.println("sentence ("+ sentence.getSentence() + ") does exist");
-                System.out.println("adding (" + sentence.getSentence() + ") to the belief base");
-                return true;
+        for (int i = 0; i < Math.pow(2, variables.size()); i++) {
+            sentenceValues.add(new ArrayList<>());
+            for (int j = 0; j < beliefBase.size(); j++) {
+                sentenceValues.get(i).add(false);
             }
         }
-        System.out.println("sentence ("+ sentence.getSentence() + ") does not already exist");
-        return false;
+        for (SentenceInterface si: beliefBase) {
+            truthTableHeader.add(si.toString());
+        }
+        //truthTableHeader.addAll(Arrays.asList("a V b", "b V c", "Theis", "Bijan0000"));
+
+        int headerSize = 0;
+        for(String s: truthTableHeader){
+            if(s.length() > headerSize){
+                headerSize = s.length();
+            }
+        }
+        for (String s: truthTableHeader) {
+            int space = headerSize - s.length();
+            for (int i = 0; i < space - (space / 2); i++) {
+                System.out.print(" ");
+            }
+            System.out.print(s);
+
+            for (int i = 0; i <  (space / 2); i++) {
+                System.out.print(" ");
+            }
+            System.out.print("|");
+        }
+        System.out.println();
+
+
+        for (int i = 0; i < sentenceValues.size(); i++) {
+            for (int j = 0; j < sentenceValues.get(i).size(); j++) {
+
+                for (int k = 0; k < (headerSize - 1) - (headerSize - 1) / 2 ; k++) {
+                    System.out.print(" ");
+
+                }
+                if (sentenceValues.get(i).get(j)) {
+
+                    System.out.print("1");
+                }
+                else {
+                    System.out.print("0");
+                }
+                for (int h = 0; h <  (headerSize - 1) / 2 ; h++ ) {
+                    System.out.print(" ");
+                }
+                System.out.print("|");
+            }
+            System.out.println();
+
+        }
+
+
+    }
+
+    public void generateTruthTable () {
+
+        for (SentenceInterface si: beliefBase) {
+            generateVariables(si);
+        }
+
+
+    }
+
+    public void generateVariables (SentenceInterface sentence) {
+
+        if (sentence instanceof Variable) {
+            boolean contains = false;
+            for (Variable v: variables) {
+                if (v.getName() == ((Variable) sentence).getName()) {
+                    contains = true;
+                    break;
+                }
+            }
+            if (contains == false) {
+                variables.add(new Variable(true, ((Variable) sentence).getName()));
+            }
+        }
+        else if (sentence instanceof Expression) {
+            generateVariables(((Expression) sentence).getSentence1());
+            generateVariables(((Expression) sentence).getSentence2());
+        }
     }
 
 
+    public ArrayList<Variable> getVariables() {
+        return variables;
+    }
 
+    public void setVariables(ArrayList<Variable> variables) {
+        this.variables = variables;
+    }
 
-
-    public ArrayList<Sentence> getBeliefBase() {
+    public ArrayList<SentenceInterface> getBeliefBase() {
         return beliefBase;
     }
 
-    public void setBeliefBase(ArrayList<Sentence> beliefBase) {
+    public void setBeliefBase(ArrayList<SentenceInterface> beliefBase) {
         this.beliefBase = beliefBase;
     }
-    */
 }
