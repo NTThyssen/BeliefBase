@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -7,11 +9,9 @@ public class Main {
     private static Variable var = new Variable(true,"c");
 
     public static void main(String[] args) {
-
-
+        Scanner input = new Scanner(System.in);
         BB.addSentence(new Expression(false, new Variable(false, "a" ), Connective.AND, exp));
         BB.addSentence(var);
-
         BB.printSentences();
     }
 }
