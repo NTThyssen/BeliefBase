@@ -17,13 +17,6 @@ public class BeliefBase {
     }
 
 
-
-
-
-
-
-
-
     /*
     private ArrayList<Sentence> beliefBase = new ArrayList<>();
     public void printSentence () {
