@@ -1,13 +1,13 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class BeliefBase {
 
     private ArrayList<SentenceInterface> beliefBase = new ArrayList<>();
     private ArrayList<Variable> variables = new ArrayList<>();
+    private ArrayList<String> variableHeader = new ArrayList<>();
     private ArrayList<ArrayList<Boolean>> variableValues = new ArrayList<ArrayList<Boolean>>();
     private ArrayList<ArrayList<Boolean>> sentenceValues = new ArrayList<ArrayList<Boolean>>();
-    private ArrayList<String> truthTableHeader = new ArrayList<>();
+    private ArrayList<String> sentenceHeader = new ArrayList<>();
 
 
     public void printSentences () {
@@ -22,26 +22,34 @@ public class BeliefBase {
     }
 
 
+
     public void printTruthTable() {
 
         for (int i = 0; i < Math.pow(2, variables.size()); i++) {
             sentenceValues.add(new ArrayList<>());
+
+
+
             for (int j = 0; j < beliefBase.size(); j++) {
                 sentenceValues.get(i).add(false);
             }
         }
         for (SentenceInterface si: beliefBase) {
-            truthTableHeader.add(si.toString());
+            sentenceHeader.add(si.toString());
         }
-        //truthTableHeader.addAll(Arrays.asList("a V b", "b V c", "Theis", "Bijan0000"));
+
+
+        for (String s: variableHeader) {
+            System.out.print(s + " | ");
+        }
 
         int headerSize = 0;
-        for(String s: truthTableHeader){
+        for(String s: sentenceHeader){
             if(s.length() > headerSize){
                 headerSize = s.length();
             }
         }
-        for (String s: truthTableHeader) {
+        for (String s: sentenceHeader) {
             int space = headerSize - s.length();
             for (int i = 0; i < space - (space / 2); i++) {
                 System.out.print(" ");
@@ -56,7 +64,21 @@ public class BeliefBase {
         System.out.println();
 
 
+
         for (int i = 0; i < sentenceValues.size(); i++) {
+
+            for (int j = 0; j < variables.size(); j++) {
+                if (variableValues.get(j).get(i)) {
+                    System.out.print("1 | ");
+                }
+                else {
+                    System.out.print("0 | ");
+                }
+            }
+            for (int q = 0; q < variables.size(); q++) {
+
+            }
+
             for (int j = 0; j < sentenceValues.get(i).size(); j++) {
 
                 for (int k = 0; k < (headerSize - 1) - (headerSize - 1) / 2 ; k++) {
@@ -87,16 +109,19 @@ public class BeliefBase {
         for (SentenceInterface si: beliefBase) {
             generateVariables(si);
         }
+        for (Variable var: variables)
+        variableHeader.add(var.getName());
 
 
     }
+
 
     public void generateVariables (SentenceInterface sentence) {
 
         if (sentence instanceof Variable) {
             boolean contains = false;
             for (Variable v: variables) {
-                if (v.getName() == ((Variable) sentence).getName()) {
+                if (v.getName().equals(((Variable) sentence).getName())) {
                     contains = true;
                     break;
                 }
@@ -109,7 +134,26 @@ public class BeliefBase {
             generateVariables(((Expression) sentence).getSentence1());
             generateVariables(((Expression) sentence).getSentence2());
         }
+
+        boolean countValue = false;
+
+        for (int i = 0; i < variables.size(); i++) {
+            int count = (int) Math.pow(2, i);
+            variableValues.add(new ArrayList<>());
+            for (int j = 0; j < Math.pow(2, variables.size()); j++) {
+
+                variableValues.get(i).add(countValue);
+                count--;
+                if (count == 0){
+                    countValue = !countValue;
+                    count = (int) Math.pow(2, i);
+                }
+            }
+        }
     }
+
+
+
 
 
     public ArrayList<Variable> getVariables() {
