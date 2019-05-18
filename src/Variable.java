@@ -21,7 +21,7 @@ public class Variable implements SentenceInterface {
         return isTrue;
     }
 
-    public void setTrue(boolean aTrue) {
+    public void setIsTrue(boolean aTrue) {
         isTrue = aTrue;
     }
 
@@ -31,4 +31,6 @@ public class Variable implements SentenceInterface {
         }
         return "!" + name;
     }
+
+
 }
