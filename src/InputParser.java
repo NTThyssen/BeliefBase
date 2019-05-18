@@ -23,15 +23,15 @@ public class InputParser {
 
                 nestedLevel++;
             }
-            if(isConnective(input.substring(i)) && nestedLevel == 1){
-                hasConnective = true;
-                expr1End = i-1;
-                int j = i;
-                while(input.charAt(j) != ' '){
-                    j++;
+            int connectiveLength = isConnective(input.substring(i));
+            if(connectiveLength > 0){
+                if(nestedLevel == 1){
+                    hasConnective = true;
+                    expr1End = i-1;
+                    connective = Connective.valueOf(input.substring(i, i + connectiveLength));
+                    expr2Start = i + connectiveLength;
                 }
-                connective = Connective.valueOf(input.substring(i, j));
-                expr2Start = j;
+                i = i + connectiveLength;
                 System.out.println("connective found");
             //connective found
             }
@@ -52,26 +52,26 @@ public class InputParser {
             return new Expression(isTrue, expr1, connective, expr2);
         }else{
             String variable = input.trim();
-            if(input.charAt(0) == '!'){
+            if(variable.charAt(0) == '!'){
                 //is false
-                return new Variable(false, variable.substring(1,2));
+                return new Variable(false, variable.substring(1));
             }else{
-                return new Variable(true, variable.substring(0,1));
+                return new Variable(true, variable);
             }
         }
     }
 
-    private boolean isConnective(String temp){
+    private int isConnective(String temp){
         if(temp.length() >= 3 && temp.substring(0, 3).equals("AND")){
-            return true;
+            return 3;
         }else if(temp.length() >= 2 && temp.substring(0, 2).equals("OR")){
-            return true;
+            return 2;
         }else if(temp.length() >= 13 && temp.substring(0, 13).equals("BIIMPLICATION")){
-            return true;
+            return 13;
         }else if(temp.length() >= 11 && temp.substring(0, 11).equals("IMPLICATION")){
-            return true;
+            return 11;
         }else{
-            return false;
+            return 0;
         }
     }
 }

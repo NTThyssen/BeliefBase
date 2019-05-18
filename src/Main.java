@@ -16,7 +16,7 @@ public class Main {
 
 
         InputParser ip = new InputParser();
-        SentenceInterface test = ip.evaluateString("!(!(!A OR E) AND ((D IMPLICATION F) OR B))");
+        SentenceInterface test = ip.evaluateString("!(!(!Asdf OR (F AND !A)) AND ((D BIIMPLICATION F) OR B))");
         //SentenceInterface test = ip.evaluateString("(A)");
         BB.addSentence(test);
         BB.printSentences();
