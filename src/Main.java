@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -9,11 +10,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        Scanner input = new Scanner(System.in);
         BB.addSentence(new Expression(true, new Variable(false, "a" ), Connective.AND, exp));
         BB.addSentence(var);
         BB.addSentence(var1);
+        InputParser ip = new InputParser();
 
+
+        BB.addSentence(ip.evaluateString(input.nextLine()));
         //BB.printSentences();
         System.out.println(" ");
         BB.generateTruthTable();
