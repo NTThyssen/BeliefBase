@@ -21,9 +21,7 @@ public class Expression implements SentenceInterface {
     }
 
 
-    public void addVariable() {
 
-    }
 
     public SentenceInterface getSentence1() {
         return sentence1;
