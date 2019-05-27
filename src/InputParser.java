@@ -1,3 +1,6 @@
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.ArrayList;
+
 public class InputParser {
     String input;
 
@@ -20,7 +23,6 @@ public class InputParser {
                 }else{
 
                 }
-
                 nestedLevel++;
             }
             int connectiveLength = isConnective(input.substring(i));
@@ -40,7 +42,6 @@ public class InputParser {
                     //end of expression found
                     System.out.println("end found");
                     expr2End = i-1;
-
                 }
                 nestedLevel--;
             }
@@ -73,5 +74,22 @@ public class InputParser {
         }else{
             return 0;
         }
+    }
+
+    public ArrayList<SentenceInterface> split(ArrayList<SentenceInterface> sentenceInterfaceList, SentenceInterface sentence){
+
+        if(sentence.getConnective() != null && sentence.getConnective() == Connective.AND){
+            split(sentenceInterfaceList, sentence.getSentence1());
+            split(sentenceInterfaceList, sentence.getSentence2());
+        }else {
+            sentenceInterfaceList.add(sentence);
+        }
+
+        return sentenceInterfaceList;
+    }
+
+    public ArrayList<SentenceInterface> takeInput(String input){
+
+        return  split(new ArrayList<>(), evaluateString(input));
     }
 }

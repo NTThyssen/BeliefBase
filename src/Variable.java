@@ -32,5 +32,20 @@ public class Variable implements SentenceInterface {
         return "!" + name;
     }
 
+    @Override
+    public Connective getConnective() {
+        return null;
+    }
+
+    @Override
+    public SentenceInterface getSentence1() {
+        return null;
+    }
+
+    @Override
+    public SentenceInterface getSentence2() {
+        return null;
+    }
+
 
 }
