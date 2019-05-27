@@ -21,7 +21,9 @@ public class Expression implements SentenceInterface {
     }
 
 
-
+    public Connective getConnective() {
+        return connective;
+    }
 
     public SentenceInterface getSentence1() {
         return sentence1;

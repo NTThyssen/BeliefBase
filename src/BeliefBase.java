@@ -4,7 +4,7 @@ public class BeliefBase {
 
     private ArrayList<SentenceInterface> beliefBase = new ArrayList<>();
     private ArrayList<Variable> variables = new ArrayList<>();
-    private ArrayList<String> variableHeader = new ArrayList<>();
+    //private ArrayList<String> variableHeader = new ArrayList<>();
     private ArrayList<ArrayList<Boolean>> variableValues = new ArrayList<>();
     private ArrayList<ArrayList<Boolean>> sentenceValues = new ArrayList<>();
     private ArrayList<String> sentenceHeader = new ArrayList<>();
@@ -23,19 +23,19 @@ public class BeliefBase {
 
     public void printTruthTable() {
 
-        for (int i = 0; i < Math.pow(2, variables.size()); i++) {
+      /*  for (int i = 0; i < Math.pow(2, variables.size()); i++) {
             sentenceValues.add(new ArrayList<>());
 
             for (int j = 0; j < beliefBase.size(); j++) {
-                sentenceValues.get(i).add(false);
+                sentenceValues.get(i).add(true);
             }
-        }
+        } */
         for (SentenceInterface si: beliefBase) {
             sentenceHeader.add(si.toString());
         }
 
-        for (String s: variableHeader) {
-            System.out.print(s + " | ");
+        for (Variable s: variables) {
+            System.out.print(s.getName() + " | ");
         }
 
         int headerSize = 0;
@@ -97,7 +97,6 @@ public class BeliefBase {
     }
 
     public void generateTruthTable () {
-        variableHeader.clear();
         variables.clear();
         variableValues.clear();
         sentenceValues.clear();
@@ -106,8 +105,70 @@ public class BeliefBase {
         for (SentenceInterface si: beliefBase) {
             generateVariables(si);
         }
-        for (Variable var: variables)
-        variableHeader.add(var.getName());
+
+        for (int i = 0; i < Math.pow(2, variables.size()); i++) {
+            sentenceValues.add(new ArrayList<>());
+
+            for (int j = 0; j < beliefBase.size(); j++) {
+
+                sentenceValues.get(i).add(generateSentenceValue(beliefBase.get(j), i));
+            }
+        }
+    }
+
+    public boolean generateSentenceValue(SentenceInterface si, int variableRow) {
+
+        if (si instanceof Variable) {
+            for (int i = 0; i < variables.size(); i++) {
+                if (variables.get(i).getName().equals(((Variable) si).getName())) {
+                    return variableValues.get(i).get(variableRow);
+                }
+            }
+        }
+
+        else {
+
+            switch (((Expression)si).getConnective()) {
+                case AND:
+                    if (generateSentenceValue(((Expression) si).getSentence1(), variableRow) &&
+                        generateSentenceValue(((Expression) si).getSentence2(), variableRow)) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+
+                case OR:
+                    if (generateSentenceValue(((Expression) si).getSentence1(), variableRow) ||
+                        generateSentenceValue(((Expression) si).getSentence2(), variableRow)) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+
+                case IMPLICATION:
+                    if (!generateSentenceValue(((Expression) si).getSentence1(), variableRow) ||
+                         generateSentenceValue(((Expression) si).getSentence2(), variableRow)) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+
+                case BIIMPLICATION:
+                    if (generateSentenceValue(((Expression) si).getSentence1(), variableRow) ==
+                        generateSentenceValue(((Expression) si).getSentence2(), variableRow)) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                    default:
+                        break;
+            }
+        }
+        return false;
     }
 
 
@@ -149,20 +210,15 @@ public class BeliefBase {
 
 
 
-
-
     public ArrayList<Variable> getVariables() {
         return variables;
     }
-
     public void setVariables(ArrayList<Variable> variables) {
         this.variables = variables;
     }
-
     public ArrayList<SentenceInterface> getBeliefBase() {
         return beliefBase;
     }
-
     public void setBeliefBase(ArrayList<SentenceInterface> beliefBase) {
         this.beliefBase = beliefBase;
     }
