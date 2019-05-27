@@ -5,10 +5,9 @@ public class BeliefBase {
     private ArrayList<SentenceInterface> beliefBase = new ArrayList<>();
     private ArrayList<Variable> variables = new ArrayList<>();
     private ArrayList<String> variableHeader = new ArrayList<>();
-    private ArrayList<ArrayList<Boolean>> variableValues = new ArrayList<ArrayList<Boolean>>();
-    private ArrayList<ArrayList<Boolean>> sentenceValues = new ArrayList<ArrayList<Boolean>>();
+    private ArrayList<ArrayList<Boolean>> variableValues = new ArrayList<>();
+    private ArrayList<ArrayList<Boolean>> sentenceValues = new ArrayList<>();
     private ArrayList<String> sentenceHeader = new ArrayList<>();
-
 
     public void printSentences () {
         System.out.println("The Belief Base consists of the following sentences:");
@@ -22,14 +21,10 @@ public class BeliefBase {
 
     }
 
-
-
     public void printTruthTable() {
 
         for (int i = 0; i < Math.pow(2, variables.size()); i++) {
             sentenceValues.add(new ArrayList<>());
-
-
 
             for (int j = 0; j < beliefBase.size(); j++) {
                 sentenceValues.get(i).add(false);
@@ -38,7 +33,6 @@ public class BeliefBase {
         for (SentenceInterface si: beliefBase) {
             sentenceHeader.add(si.toString());
         }
-
 
         for (String s: variableHeader) {
             System.out.print(s + " | ");
@@ -63,8 +57,6 @@ public class BeliefBase {
             System.out.print("|");
         }
         System.out.println();
-
-
 
         for (int i = 0; i < sentenceValues.size(); i++) {
 
@@ -102,18 +94,20 @@ public class BeliefBase {
 
         }
 
-
     }
 
     public void generateTruthTable () {
+        variableHeader.clear();
+        variables.clear();
+        variableValues.clear();
+        sentenceValues.clear();
+        sentenceHeader.clear();
 
         for (SentenceInterface si: beliefBase) {
             generateVariables(si);
         }
         for (Variable var: variables)
         variableHeader.add(var.getName());
-
-
     }
 
 
