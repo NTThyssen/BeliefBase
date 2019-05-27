@@ -46,7 +46,12 @@ public class Main {
 
             }
 
-            else if(option == 3) {
+            else if (option == 3) {
+                BB.generateTruthTable();
+                BB.printTruthTable();
+            }
+
+            else if(option == 4) {
                 System.exit(0);
             }
 
