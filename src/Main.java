@@ -10,17 +10,68 @@ public class Main {
     private static Variable var = new Variable(true,"c");
     private static Variable var1 = new Variable(true,"a");
 
+    private static TextualInterface TI = new TextualInterface();
+
+    private static InputParser ip = new InputParser();
+
+
     public static void main(String[] args) {
 
-        Scanner input = new Scanner(System.in);
-        BB.addSentence(new Expression(true, new Variable(false, "a" ), Connective.AND, exp));
+        TI.printMenu();
+
+        int option;
+        String sentence;
+
+        while(true) {
+
+          //  BB.printSentences();
+            Scanner scanner = new Scanner(System.in);
+            option = scanner.nextInt();
+
+            if (option == 1) {
+                System.out.println();
+                BB.printSentences();
+                System.out.println();
+                TI.printMenu();
+            }
+
+            else if(option == 2) {
+                System.out.println("Type in your sentence");
+
+                Scanner scanner1 = new Scanner(System.in);
+                sentence = scanner1.nextLine();
+                BB.addSentence(ip.evaluateString(sentence));
+                System.out.println("Added: " + sentence + " to knowledge base\n");
+                TI.printMenu();
+
+            }
+
+            else if(option == 3) {
+                System.exit(0);
+            }
+
+            else {
+                System.out.println("wrong input, try again bro");
+            }
+
+        }
+
+
+
+
+
+
+        /*
+
+        //BB.addSentence(new Expression(true, new Variable(false, "a" ), Connective.AND, exp));
         BB.addSentence(var);
         BB.addSentence(var1);
-        InputParser ip = new InputParser();
+        BB.addSentence(exp1);
+        //InputParser ip = new InputParser();
+        //BB.addSentence(ip.evaluateString("(a OR b)"));
 
 
-        BB.addSentence(ip.evaluateString(input.nextLine()));
-        //BB.printSentences();
+        BB.printSentences();
         System.out.println(" ");
         BB.generateTruthTable();
         BB.printTruthTable();
@@ -29,5 +80,7 @@ public class Main {
             System.out.println(si);
         }
         System.out.println(BB.getBeliefBase());
+
+        */
     }
 }
