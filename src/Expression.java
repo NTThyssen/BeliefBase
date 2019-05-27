@@ -4,6 +4,10 @@ public class Expression implements SentenceInterface {
     private SentenceInterface sentence1, sentence2;
     private boolean isTrue;
 
+    public boolean isTrue() {
+        return isTrue;
+    }
+
     public Expression(boolean isTrue, SentenceInterface sentence1, Connective connective, SentenceInterface sentence2) {
         this.isTrue = isTrue;
         this.sentence1 = sentence1;
@@ -39,5 +43,9 @@ public class Expression implements SentenceInterface {
 
     public void setSentence2(SentenceInterface sentence2) {
         this.sentence2 = sentence2;
+    }
+
+    public Connective getConnective(){
+        return connective;
     }
 }

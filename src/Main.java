@@ -16,7 +16,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-
+        ArrayList<SentenceInterface> list = new ArrayList<>();
         TI.printMenu();
 
         int option;
@@ -40,7 +40,10 @@ public class Main {
 
                 Scanner scanner1 = new Scanner(System.in);
                 sentence = scanner1.nextLine();
-                BB.addSentence(ip.evaluateString(sentence));
+                list = ip.takeInput(sentence);
+                for(SentenceInterface s : list) {
+                    BB.addSentence(s);
+                }
                 System.out.println("Added: " + sentence + " to knowledge base\n");
                 TI.printMenu();
 
