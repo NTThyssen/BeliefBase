@@ -11,6 +11,7 @@ public class BeliefBase {
 
 
     public void printSentences () {
+        System.out.println("The Belief Base consists of the following sentences:");
         for (SentenceInterface si: beliefBase) {
             System.out.println(si.toString());
         }
