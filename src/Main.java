@@ -27,6 +27,7 @@ public class Main {
           //  BB.printSentences();
             Scanner scanner = new Scanner(System.in);
             option = scanner.nextInt();
+
             if (option == 1) {
                 System.out.println();
                 BB.printSentences();
@@ -45,22 +46,15 @@ public class Main {
                 }
                 System.out.println("Added: " + sentence + " to knowledge base\n");
                 TI.printMenu();
-                BB.generateTruthTable();
+
             }
 
             else if (option == 3) {
+                BB.generateTruthTable();
                 BB.printTruthTable();
             }
 
-            else if (option == 4) {
-                System.out.println("Type in sentence you want to remove from belief base");
-                Scanner scanner1 = new Scanner(System.in);
-                sentence = scanner1.nextLine();
-                BB.removeSentence(sentence);
-                TI.printMenu();
-            }
-
-            else if(option == 5) {
+            else if(option == 4) {
                 System.exit(0);
             }
 

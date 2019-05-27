@@ -14,56 +14,11 @@ public class BeliefBase {
         for (SentenceInterface si: beliefBase) {
             System.out.println(si.toString());
         }
-        generateTruthTable();
     }
 
     public void addSentence (SentenceInterface sentence) {
-
         beliefBase.add(sentence);
-        generateTruthTable();
-        checkEntailment();
-    }
 
-    public void checkEntailment () {
-        boolean entails = false;
-        for (int i = 0; i < sentenceValues.size() - 2; i++) {
-            System.out.println("i: " + i);
-            entails = true;
-            for (int j = 0; j < sentenceValues.get(i).size(); j++) {
-                System.out.println("j: " + j);
-
-                if (sentenceValues.get(i).get(j) && !sentenceValues.get(sentenceValues.size()-1).get(j)) {
-                    entails = false;
-                    break;
-                }
-            }
-            if (entails) {
-                break;
-            }
-        }
-        if (entails){
-            System.out.println("hype");
-            removeSentence(beliefBase.get(beliefBase.size()-1).toString());
-        }else{
-            for(int i = sentenceValues.size() - 2; i >= 0; i--){
-                for(int j = 0; j < sentenceValues.get(i).size(); j++){
-                    if(!sentenceValues.get(i).get(j) && sentenceValues.get(sentenceValues.size()-1).get(j)){
-                        System.out.println("yoyoyoy");
-                        removeSentence(beliefBase.get(i).toString());
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    public void removeSentence (String sentence) {
-        for (int i = 0; i < beliefBase.size(); i++) {
-            if (beliefBase.get(i).toString().equals(sentence)) {
-                beliefBase.remove(i);
-            }
-        }
-        generateTruthTable();
     }
 
     public void printTruthTable() {
@@ -114,7 +69,9 @@ public class BeliefBase {
                 }
             }
             for (int q = 0; q < variables.size(); q++) {
+
             }
+
             for (int j = 0; j < sentenceValues.get(i).size(); j++) {
 
                 for (int k = 0; k < (headerSize - 1) - (headerSize - 1) / 2 ; k++) {
@@ -134,7 +91,9 @@ public class BeliefBase {
                 System.out.print("|");
             }
             System.out.println();
+
         }
+
     }
 
     public void generateTruthTable () {
@@ -158,11 +117,11 @@ public class BeliefBase {
     }
 
     public boolean generateSentenceValue(SentenceInterface si, int variableRow) {
-        boolean returnValue = false;
+
         if (si instanceof Variable) {
             for (int i = 0; i < variables.size(); i++) {
                 if (variables.get(i).getName().equals(((Variable) si).getName())) {
-                    returnValue = variableValues.get(i).get(variableRow);
+                    return variableValues.get(i).get(variableRow);
                 }
             }
         }
@@ -173,49 +132,43 @@ public class BeliefBase {
                 case AND:
                     if (generateSentenceValue(((Expression) si).getSentence1(), variableRow) &&
                         generateSentenceValue(((Expression) si).getSentence2(), variableRow)) {
-                        returnValue = true;
+                        return true;
                     }
                     else {
-                        returnValue = false;
+                        return false;
                     }
-                    break;
+
                 case OR:
                     if (generateSentenceValue(((Expression) si).getSentence1(), variableRow) ||
                         generateSentenceValue(((Expression) si).getSentence2(), variableRow)) {
-                        returnValue = true;
+                        return true;
                     }
                     else {
-                        returnValue = false;
+                        return false;
                     }
-                    break;
+
                 case IMPLICATION:
                     if (!generateSentenceValue(((Expression) si).getSentence1(), variableRow) ||
                          generateSentenceValue(((Expression) si).getSentence2(), variableRow)) {
-                        returnValue = true;
+                        return true;
                     }
                     else {
-                        returnValue = false;
+                        return false;
                     }
-                    break;
+
                 case BIIMPLICATION:
                     if (generateSentenceValue(((Expression) si).getSentence1(), variableRow) ==
                         generateSentenceValue(((Expression) si).getSentence2(), variableRow)) {
-                        returnValue = true;
+                        return true;
                     }
                     else {
-                        returnValue = false;
+                        return false;
                     }
-                    break;
                     default:
                         break;
             }
         }
-        if (si.isTrue()) {
-            return returnValue;
-        }
-        else {
-            return !returnValue;
-        }
+        return false;
     }
 
 
