@@ -22,6 +22,7 @@ public class BeliefBase {
         beliefBase.add(sentence);
         generateTruthTable();
         checkEntailment();
+        checkConsistency();
     }
 
     public void checkEntailment () {
@@ -64,15 +65,27 @@ public class BeliefBase {
     }
 
     public void checkConsistency () {
-
-        for (int i = 0; i < Math.pow(2, variables.size()); i++) {
-
-
-            for (int j = 0; j < beliefBase.size(); j++) {
-
+        int consistentRows = 0;
+        for (int i = 0; i < sentenceValues.get(0).size(); i++) {
+            boolean isRowConsistent = true;
+            for (int j = 0; j < sentenceValues.size(); j++) {
+                if(!sentenceValues.get(j).get(i)){
+                    System.out.println(sentenceValues.get(j).get(i));
+                    isRowConsistent = false;
+                    break;
+                }
+            }
+            if(isRowConsistent){
+                consistentRows++;
             }
         }
-
+        if(consistentRows < 1){
+            //Belief base inconsistent!
+            System.out.println("belief base is inconsistent. Consistent Rows = " + consistentRows);
+            
+        }else{
+            System.out.println("Belief base is consistent!");
+        }
     }
 
     public void removeSentence (String sentence) {
