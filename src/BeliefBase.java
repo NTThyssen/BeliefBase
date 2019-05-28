@@ -26,7 +26,7 @@ public class BeliefBase {
 
     public void checkEntailment () {
         boolean entails = false;
-        for (int i = 0; i < sentenceValues.size() - 2; i++) {
+        for (int i = 0; i < sentenceValues.size() - 1; i++) {
             System.out.println("i: " + i);
             entails = true;
             for (int j = 0; j < sentenceValues.get(i).size(); j++) {
@@ -61,6 +61,18 @@ public class BeliefBase {
                 }
             }
         }
+    }
+
+    public void checkConsistency () {
+
+        for (int i = 0; i < Math.pow(2, variables.size()); i++) {
+
+
+            for (int j = 0; j < beliefBase.size(); j++) {
+
+            }
+        }
+
     }
 
     public void removeSentence (String sentence) {
