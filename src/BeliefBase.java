@@ -42,16 +42,22 @@ public class BeliefBase {
             }
         }
         if (entails){
-            System.out.println("hype");
-            removeSentence(beliefBase.get(beliefBase.size()-1).toString());
+            System.out.println("New element is entailed.");
+            //removeSentence(beliefBase.get(beliefBase.size()-1).toString());
+            beliefBase.remove(beliefBase.size()-1);
         }else{
+            entails = true;
             for(int i = sentenceValues.size() - 2; i >= 0; i--){
                 for(int j = 0; j < sentenceValues.get(i).size(); j++){
                     if(!sentenceValues.get(i).get(j) && sentenceValues.get(sentenceValues.size()-1).get(j)){
-                        System.out.println("yoyoyoy");
-                        removeSentence(beliefBase.get(i).toString());
+                        entails = false;
                         break;
                     }
+                }
+                if(entails){
+                    System.out.println("Old element entailed by new. " + beliefBase.get(i).toString());
+                    //removeSentence(beliefBase.get(i).toString());
+                    beliefBase.remove(beliefBase.get(i));
                 }
             }
         }
@@ -103,7 +109,7 @@ public class BeliefBase {
         }
         System.out.println();
 
-        for (int i = 0; i < sentenceValues.size(); i++) {
+        for (int i = 0; i < Math.pow(2, variables.size()); i++) {
 
             for (int j = 0; j < variables.size(); j++) {
                 if (variableValues.get(j).get(i)) {
@@ -113,15 +119,13 @@ public class BeliefBase {
                     System.out.print("0 | ");
                 }
             }
-            for (int q = 0; q < variables.size(); q++) {
-            }
-            for (int j = 0; j < sentenceValues.get(i).size(); j++) {
+            for (int j = 0; j < sentenceValues.size(); j++) {
 
                 for (int k = 0; k < (headerSize - 1) - (headerSize - 1) / 2 ; k++) {
                     System.out.print(" ");
 
                 }
-                if (sentenceValues.get(i).get(j)) {
+                if (sentenceValues.get(j).get(i)) {
 
                     System.out.print("1");
                 }
@@ -146,13 +150,12 @@ public class BeliefBase {
         for (SentenceInterface si: beliefBase) {
             generateVariables(si);
         }
-
-        for (int i = 0; i < Math.pow(2, variables.size()); i++) {
+        for (int j = 0; j < beliefBase.size(); j++) {
             sentenceValues.add(new ArrayList<>());
 
-            for (int j = 0; j < beliefBase.size(); j++) {
+            for (int i = 0; i < Math.pow(2, variables.size()); i++) {
 
-                sentenceValues.get(i).add(generateSentenceValue(beliefBase.get(j), i));
+                sentenceValues.get(j).add(generateSentenceValue(beliefBase.get(j), i));
             }
         }
     }
