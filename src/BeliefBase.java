@@ -82,10 +82,85 @@ public class BeliefBase {
         if(consistentRows < 1){
             //Belief base inconsistent!
             System.out.println("belief base is inconsistent. Consistent Rows = " + consistentRows);
-            
+            handleInconsistency();
         }else{
             System.out.println("Belief base is consistent!");
         }
+    }
+
+    public void handleInconsistency () {
+        ArrayList<Inconsistency> inconList = new ArrayList<>();
+
+        for (int j = 0; j < sentenceValues.get(0).size(); j++) {
+
+            if (sentenceValues.get(sentenceValues.size() - 1).get(j)) {
+                inconList.add(new Inconsistency(j));
+                for (int i = 0; i < sentenceValues.size(); i++) {
+
+                    if (!sentenceValues.get(i).get(j)) {
+                        inconList.get(inconList.size() - 1).getZeroList().add(i);
+                    }
+                }
+            }
+        }
+        int minInconsintensies = 1000000;
+        for(int i = 0; i < inconList.size(); i++) {
+            if(inconList.get(i).getZeroList().size() <= minInconsintensies){
+                minInconsintensies = inconList.get(i).getZeroList().size();
+            }
+        }
+        for(int i = 0; i < inconList.size(); i++) {
+            if(inconList.get(i).getZeroList().size() > minInconsintensies){
+                inconList.remove(i);
+                i--;
+            }
+        }
+        //int minUniqueIncon = 1000;
+
+        for (int i = 0; i < inconList.get(0).getZeroList().size(); i++) {
+            int minIndex = 1000;
+
+            for (int j = 0; j < inconList.size(); j++) {
+                if (inconList.get(j).getZeroList().get(i) < minIndex) {
+                    minIndex = inconList.get(j).getZeroList().get(i);
+                }
+            }
+            for (int j = 0; j < inconList.size(); j++) {
+                if (inconList.get(j).getZeroList().get(i) != minIndex) {
+                    inconList.remove(j);
+                    j--;
+                }
+            }
+        }
+        int bla = 0;
+        for (int i = 0; i < inconList.get(0).getZeroList().size(); i++) {
+            beliefBase.remove(inconList.get(0).getZeroList().get(i)-bla);
+            bla++;
+        }
+        generateTruthTable();
+        /*for (int i = 0; i < inconList.get(0).getZeroList().size(); i++) {
+
+            for (int j = 0; j < inconList.size(); j++) {
+
+               if (inconList.get(j).getZeroList().get(i) == minUniqueIncon) {
+                   minUniqueIncon = 1000;
+               }
+
+               if (inconList.get(j).getZeroList().get(i) < minUniqueIncon) {
+                   minUniqueIncon = inconList.get(j).getZeroList().get(i);
+
+                   if(inconList.get(i).getZeroList().get(j) < inconList.get(i - 1).getZeroList().get(j)) {
+
+                   }
+               }
+               else {
+                   inconList.remove(inconList.get(j));
+                   j--;
+               }
+            }
+        }
+        for (int i = 0; i < inconList.)
+        removeSentence(); */
     }
 
     public void removeSentence (String sentence) {

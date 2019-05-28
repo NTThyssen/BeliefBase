@@ -4,11 +4,12 @@ import java.util.Scanner;
 public class Main {
 
     private static BeliefBase BB = new BeliefBase();
-    private static Expression exp = new Expression(true, new Variable(true,"b"), Connective.OR, new Variable(true, "c"));
-    private static Expression exp1 = new Expression(true, new Variable(false,"b"), Connective.OR, new Variable(true, "d"));
+    private static Expression exp = new Expression(true, new Variable(true,"a"), Connective.IMPLICATION, new Variable(true, "b"));
+    private static Expression exp1 = new Expression(true, new Variable(true,"b"), Connective.IMPLICATION, new Variable(true, "a"));
+    private static Expression exp2 = new Expression(false, new Variable(true,"a"), Connective.BIIMPLICATION, new Variable(true, "b"));
 
     private static Variable var = new Variable(true,"c");
-    private static Variable var1 = new Variable(true,"a");
+    //private static Variable var1 = new Variable(true,"a");
 
     private static TextualInterface TI = new TextualInterface();
 
@@ -21,6 +22,13 @@ public class Main {
 
         int option;
         String sentence;
+
+        //BB.addSentence(var);
+        //BB.addSentence(exp);
+        //BB.addSentence(exp1);
+        //BB.addSentence(exp2);
+
+
 
         while(true) {
 
