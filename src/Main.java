@@ -17,22 +17,11 @@ public class Main {
 
 
     public static void main(String[] args) {
-        ArrayList<SentenceInterface> list = new ArrayList<>();
+        ArrayList<SentenceInterface> list;
         TI.printMenu();
-
         int option;
         String sentence;
-
-        //BB.addSentence(var);
-        //BB.addSentence(exp);
-        //BB.addSentence(exp1);
-        //BB.addSentence(exp2);
-
-
-
         while(true) {
-
-          //  BB.printSentences();
             Scanner scanner = new Scanner(System.in);
             option = scanner.nextInt();
             if (option == 1) {
@@ -43,25 +32,24 @@ public class Main {
             }
 
             else if(option == 2) {
-                System.out.println("Type in your sentence");
-
+                System.out.println("Type in your sentence:");
                 Scanner scanner1 = new Scanner(System.in);
                 sentence = scanner1.nextLine();
                 list = ip.takeInput(sentence);
                 for(SentenceInterface s : list) {
                     BB.addSentence(s);
                 }
-                System.out.println("Added: " + sentence + " to knowledge base\n");
                 TI.printMenu();
                 BB.generateTruthTable();
             }
 
             else if (option == 3) {
                 BB.printTruthTable();
+                TI.printMenu();
             }
 
             else if (option == 4) {
-                System.out.println("Type in sentence you want to remove from belief base");
+                System.out.println("Type in sentence you want to remove from belief base:");
                 Scanner scanner1 = new Scanner(System.in);
                 sentence = scanner1.nextLine();
                 BB.removeSentence(sentence);
@@ -73,36 +61,8 @@ public class Main {
             }
 
             else {
-                System.out.println("wrong input, try again bro");
+                System.out.println("wrong input, please try again.");
             }
-
         }
-
-
-
-
-
-
-        /*
-
-        //BB.addSentence(new Expression(true, new Variable(false, "a" ), Connective.AND, exp));
-        BB.addSentence(var);
-        BB.addSentence(var1);
-        BB.addSentence(exp1);
-        //InputParser ip = new InputParser();
-        //BB.addSentence(ip.evaluateString("(a OR b)"));
-
-
-        BB.printSentences();
-        System.out.println(" ");
-        BB.generateTruthTable();
-        BB.printTruthTable();
-
-        for (SentenceInterface si: BB.getVariables()) {
-            System.out.println(si);
-        }
-        System.out.println(BB.getBeliefBase());
-
-        */
     }
 }

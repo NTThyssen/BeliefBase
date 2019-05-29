@@ -5,6 +5,7 @@ public class InputParser {
     String input;
 
     public SentenceInterface evaluateString(String input){
+        input = input.trim();
         int nestedLevel = 0;
         int i = 0;
         int expr1Start = 0, expr1End = 0, expr2Start = 0, expr2End = 0;
@@ -15,12 +16,16 @@ public class InputParser {
             if(input.charAt(i) == '('){
                 //start of expression found
                 if(nestedLevel == 0){
-                    if(i == 1 && input.charAt(0) == '!'){
+                    if(i == 1 && input.charAt(i-1) == '!'){
                         isTrue = false;
+
                     }
-                    System.out.println("start found");
+                    /*if(i != 0 && input.charAt(i-1) == '!'){
+                        expr1Start = i;
+                    }else{
+                        expr1Start = i+1;
+                    }*/
                     expr1Start = i+1;
-                }else{
 
                 }
                 nestedLevel++;
@@ -34,13 +39,11 @@ public class InputParser {
                     expr2Start = i + connectiveLength;
                 }
                 i = i + connectiveLength;
-                System.out.println("connective found");
             //connective found
             }
             if(input.charAt(i) == ')'){
                 if(nestedLevel == 1){
                     //end of expression found
-                    System.out.println("end found");
                     expr2End = i-1;
                 }
                 nestedLevel--;
@@ -89,7 +92,6 @@ public class InputParser {
     }
 
     public ArrayList<SentenceInterface> takeInput(String input){
-
         return  split(new ArrayList<>(), evaluateString(input));
     }
 }

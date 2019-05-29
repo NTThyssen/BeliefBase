@@ -5,7 +5,6 @@ public class Inconsistency {
     private int row;
     private ArrayList<Integer> zeroList;
 
-
     public Inconsistency(int row) {
         this.row = row;
         this.zeroList = new ArrayList<>();

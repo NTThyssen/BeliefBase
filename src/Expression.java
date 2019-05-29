@@ -4,10 +4,6 @@ public class Expression implements SentenceInterface {
     private SentenceInterface sentence1, sentence2;
     private boolean isTrue;
 
-    public boolean isTrue() {
-        return isTrue;
-    }
-
     public Expression(boolean isTrue, SentenceInterface sentence1, Connective connective, SentenceInterface sentence2) {
         this.isTrue = isTrue;
         this.sentence1 = sentence1;
@@ -15,16 +11,13 @@ public class Expression implements SentenceInterface {
         this.sentence2 = sentence2;
     }
 
-
-
     public String toString () {
-
         String buildString = "";
+
         if(!isTrue){
             buildString += "!";
         }
-
-        buildString += sentence1.toString();
+        buildString += "(" +sentence1.toString();
 
         if(connective == Connective.IMPLICATION){
             buildString += " -> ";
@@ -33,19 +26,10 @@ public class Expression implements SentenceInterface {
         } else {
             buildString += " " + connective.toString() + " ";
         }
+        buildString += sentence2.toString() + ")";
 
-        buildString += sentence2.toString();
-
-        /* if (isTrue) {
-            return "(" + sentence1.toString() + " " + connective.toString() + " " + sentence2.toString() + ")";
-        }
-        return "!(" + sentence1.toString() + " " + connective.toString() + " " + sentence2.toString() + ")";*/
-
-        return "(" + buildString + ")";
+        return buildString;
     }
-
-
-
 
     public SentenceInterface getSentence1() {
         return sentence1;
@@ -65,5 +49,9 @@ public class Expression implements SentenceInterface {
 
     public Connective getConnective(){
         return connective;
+    }
+
+    public boolean isTrue() {
+        return isTrue;
     }
 }

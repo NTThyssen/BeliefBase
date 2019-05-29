@@ -28,11 +28,8 @@ public class BeliefBase {
     public void checkEntailment () {
         boolean entails = false;
         for (int i = 0; i < sentenceValues.size() - 1; i++) {
-            System.out.println("i: " + i);
             entails = true;
             for (int j = 0; j < sentenceValues.get(i).size(); j++) {
-                System.out.println("j: " + j);
-
                 if (sentenceValues.get(i).get(j) && !sentenceValues.get(sentenceValues.size()-1).get(j)) {
                     entails = false;
                     break;
@@ -43,8 +40,6 @@ public class BeliefBase {
             }
         }
         if (entails){
-            System.out.println("New element is entailed.");
-            //removeSentence(beliefBase.get(beliefBase.size()-1).toString());
             beliefBase.remove(beliefBase.size()-1);
         }else{
             entails = true;
@@ -56,8 +51,6 @@ public class BeliefBase {
                     }
                 }
                 if(entails){
-                    System.out.println("Old element entailed by new. " + beliefBase.get(i).toString());
-                    //removeSentence(beliefBase.get(i).toString());
                     beliefBase.remove(beliefBase.get(i));
                 }
             }
@@ -70,7 +63,6 @@ public class BeliefBase {
             boolean isRowConsistent = true;
             for (int j = 0; j < sentenceValues.size(); j++) {
                 if(!sentenceValues.get(j).get(i)){
-                    System.out.println(sentenceValues.get(j).get(i));
                     isRowConsistent = false;
                     break;
                 }
@@ -81,22 +73,18 @@ public class BeliefBase {
         }
         if(consistentRows < 1){
             //Belief base inconsistent!
-            System.out.println("belief base is inconsistent. Consistent Rows = " + consistentRows);
+            System.out.println("Belief base is inconsistent. Removing conflicting statements.");
             handleInconsistency();
         }else{
-            System.out.println("Belief base is consistent!");
         }
     }
 
     public void handleInconsistency () {
         ArrayList<Inconsistency> inconList = new ArrayList<>();
-
         for (int j = 0; j < sentenceValues.get(0).size(); j++) {
-
             if (sentenceValues.get(sentenceValues.size() - 1).get(j)) {
                 inconList.add(new Inconsistency(j));
                 for (int i = 0; i < sentenceValues.size(); i++) {
-
                     if (!sentenceValues.get(i).get(j)) {
                         inconList.get(inconList.size() - 1).getZeroList().add(i);
                     }
@@ -109,13 +97,13 @@ public class BeliefBase {
                 minInconsintensies = inconList.get(i).getZeroList().size();
             }
         }
+
         for(int i = 0; i < inconList.size(); i++) {
             if(inconList.get(i).getZeroList().size() > minInconsintensies){
                 inconList.remove(i);
                 i--;
             }
         }
-        //int minUniqueIncon = 1000;
 
         for (int i = 0; i < inconList.get(0).getZeroList().size(); i++) {
             int minIndex = 1000;
@@ -138,29 +126,6 @@ public class BeliefBase {
             bla++;
         }
         generateTruthTable();
-        /*for (int i = 0; i < inconList.get(0).getZeroList().size(); i++) {
-
-            for (int j = 0; j < inconList.size(); j++) {
-
-               if (inconList.get(j).getZeroList().get(i) == minUniqueIncon) {
-                   minUniqueIncon = 1000;
-               }
-
-               if (inconList.get(j).getZeroList().get(i) < minUniqueIncon) {
-                   minUniqueIncon = inconList.get(j).getZeroList().get(i);
-
-                   if(inconList.get(i).getZeroList().get(j) < inconList.get(i - 1).getZeroList().get(j)) {
-
-                   }
-               }
-               else {
-                   inconList.remove(inconList.get(j));
-                   j--;
-               }
-            }
-        }
-        for (int i = 0; i < inconList.)
-        removeSentence(); */
     }
 
     public void removeSentence (String sentence) {
@@ -173,14 +138,6 @@ public class BeliefBase {
     }
 
     public void printTruthTable() {
-
-      /*  for (int i = 0; i < Math.pow(2, variables.size()); i++) {
-            sentenceValues.add(new ArrayList<>());
-
-            for (int j = 0; j < beliefBase.size(); j++) {
-                sentenceValues.get(i).add(true);
-            }
-        } */
         for (SentenceInterface si: beliefBase) {
             sentenceHeader.add(si.toString());
         }
@@ -201,7 +158,6 @@ public class BeliefBase {
                 System.out.print(" ");
             }
             System.out.print(s);
-
             for (int i = 0; i <  (space / 2); i++) {
                 System.out.print(" ");
             }
@@ -356,20 +312,5 @@ public class BeliefBase {
                 }
             }
         }
-    }
-
-
-
-    public ArrayList<Variable> getVariables() {
-        return variables;
-    }
-    public void setVariables(ArrayList<Variable> variables) {
-        this.variables = variables;
-    }
-    public ArrayList<SentenceInterface> getBeliefBase() {
-        return beliefBase;
-    }
-    public void setBeliefBase(ArrayList<SentenceInterface> beliefBase) {
-        this.beliefBase = beliefBase;
     }
 }

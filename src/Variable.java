@@ -13,16 +13,8 @@ public class Variable implements SentenceInterface {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public boolean isTrue() {
         return isTrue;
-    }
-
-    public void setIsTrue(boolean aTrue) {
-        isTrue = aTrue;
     }
 
     public String toString () {
