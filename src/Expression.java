@@ -18,10 +18,30 @@ public class Expression implements SentenceInterface {
 
 
     public String toString () {
-        if (isTrue) {
+
+        String buildString = "";
+        if(!isTrue){
+            buildString += "!";
+        }
+
+        buildString += sentence1.toString();
+
+        if(connective == Connective.IMPLICATION){
+            buildString += " -> ";
+        } else if(connective == Connective.BIIMPLICATION){
+            buildString += " <-> ";
+        } else {
+            buildString += " " + connective.toString() + " ";
+        }
+
+        buildString += sentence2.toString();
+
+        /* if (isTrue) {
             return "(" + sentence1.toString() + " " + connective.toString() + " " + sentence2.toString() + ")";
         }
-        return "!(" + sentence1.toString() + " " + connective.toString() + " " + sentence2.toString() + ")";
+        return "!(" + sentence1.toString() + " " + connective.toString() + " " + sentence2.toString() + ")";*/
+
+        return "(" + buildString + ")";
     }
 
 
